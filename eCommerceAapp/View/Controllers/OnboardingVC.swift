@@ -21,6 +21,7 @@ class OnboardingVC: UIViewController {
         let collectionview = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionview.register(OnboardingCell.self, forCellWithReuseIdentifier: OnboardingCell.identifier)
         collectionview.translatesAutoresizingMaskIntoConstraints = false
+        collectionview.backgroundColor = UIColor.systemGray6
         collectionview.isPagingEnabled = true
         
         return collectionview
@@ -44,7 +45,7 @@ class OnboardingVC: UIViewController {
         pagecontroll.currentPage = 0
         pagecontroll.numberOfPages = images.count
         pagecontroll.currentPageIndicatorTintColor = UIColor.systemRed
-        pagecontroll.pageIndicatorTintColor = UIColor.systemGreen
+        pagecontroll.pageIndicatorTintColor = UIColor.black
         
         return pagecontroll
     }()
@@ -95,7 +96,9 @@ extension OnboardingVC {
     }
     
     @objc private func buttonClicked(){
-        print("to home")
+        let tabbarVC = TabbarController()
+        tabbarVC.modalPresentationStyle = .fullScreen
+        present(tabbarVC, animated: true)
     }
 }
 
@@ -120,6 +123,7 @@ extension OnboardingVC:UICollectionViewDelegate,UICollectionViewDataSource,UICol
         return CGSize(width: view.frame.size.width, height: view.frame.size.height)
     }
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
         let x = targetContentOffset.pointee.x
         let current = x / view.frame.width
         self.pageControl.currentPage = Int(current)

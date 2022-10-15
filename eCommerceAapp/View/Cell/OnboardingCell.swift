@@ -22,7 +22,7 @@ class OnboardingCell: UICollectionViewCell {
         let imageview = UIImageView()
         imageview.translatesAutoresizingMaskIntoConstraints = false
         imageview.clipsToBounds = true
-        imageview.contentMode = .scaleAspectFill
+        imageview.contentMode = .scaleAspectFit
         imageview.image = UIImage(named: "ecommerce1")
         
         return imageview
@@ -41,23 +41,11 @@ class OnboardingCell: UICollectionViewCell {
                 
         contentView.addSubview(view)
         view.addSubview(image)
-
-        NSLayoutConstraint.activate([
-
-            view.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
-            view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            view.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.5),
-
-            image.topAnchor.constraint(equalTo: view.topAnchor),
-            image.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            image.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            image.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        view.frame = bounds
+        image.frame = view.bounds
     }
     
     public func configıreImage(named:String){
         image.image = UIImage(named: named)
     }
-    
 }
