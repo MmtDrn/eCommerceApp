@@ -55,7 +55,7 @@ final class TabbarController:UITabBarController {
         let homeVC = UINavigationController(rootViewController: TabbarItem.Home.viewController)
         let searchVC = UINavigationController(rootViewController: TabbarItem.Search.viewController)
         let cartVC = UINavigationController(rootViewController: TabbarItem.Cart.viewController)
-        let settingsVC = UINavigationController(rootViewController: TabbarItem.Cart.viewController)
+        let settingsVC = UINavigationController(rootViewController: TabbarItem.Settings.viewController)
         
         homeVC.tabBarItem = UITabBarItem(title: TabbarItem.Home.title, image: TabbarItem.Home.icon, tag: TabbarItem.Home.rawValue)
         searchVC.tabBarItem = UITabBarItem(title: TabbarItem.Search.title, image: TabbarItem.Search.icon, tag: TabbarItem.Search.rawValue)
