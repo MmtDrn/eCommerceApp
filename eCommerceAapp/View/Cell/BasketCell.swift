@@ -8,9 +8,9 @@
 import UIKit
 import AlamofireImage
 
-class CartCell: UITableViewCell {
+class BasketCell: UITableViewCell {
     
-    static let identifier = "CartCell"
+    static let identifier = "BasketCell"
     
     private let image:UIImageView = {
         let imageview = UIImageView()
@@ -43,13 +43,14 @@ class CartCell: UITableViewCell {
         let button = UIButton()
         button.backgroundColor = .systemBackground
         button.setImage(UIImage(systemName: "plus"), for: .normal)
-        button.tintColor = UIColor.label
+        button.tintColor = UIColor.orange
         
         return button
     }()
     private var countButton:UIButton = {
         let button = UIButton()
-        button.backgroundColor = .systemBackground
+        button.backgroundColor = .systemGray6
+        button.layer.cornerRadius = 20
         button.setTitle("0", for: .normal)
         button.setTitleColor(UIColor.label, for: .normal)
         
@@ -59,7 +60,7 @@ class CartCell: UITableViewCell {
         let button = UIButton()
         button.backgroundColor = .systemBackground
         button.setImage(UIImage(systemName: "minus"), for: .normal)
-        button.tintColor = UIColor.label
+        button.tintColor = UIColor.systemRed
         
         return button
     }()
@@ -83,9 +84,9 @@ class CartCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(priceLabel)
         contentView.addSubview(stackView)
-        stackView.addArrangedSubview(plusButton)
-        stackView.addArrangedSubview(countButton)
         stackView.addArrangedSubview(minusButton)
+        stackView.addArrangedSubview(countButton)
+        stackView.addArrangedSubview(plusButton)
         
     }
     required init?(coder: NSCoder) {
@@ -104,7 +105,7 @@ class CartCell: UITableViewCell {
             titleLabel.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 5),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 5),
             
-            stackView.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 5),
+            stackView.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 10),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
             stackView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.3),
             stackView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.25),

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChoiceCollectionCell: UICollectionViewCell {
+class ChoiceCVCell: UICollectionViewCell {
     
     static var identifier = "ChoiceCollectionCell"
     

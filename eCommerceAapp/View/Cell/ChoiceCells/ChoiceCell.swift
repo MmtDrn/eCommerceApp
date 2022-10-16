@@ -22,7 +22,7 @@ class ChoiceCell: UITableViewCell {
         let collectionview = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionview.isPagingEnabled = true
         collectionview.isScrollEnabled = false
-        collectionview.register(ChoiceCollectionCell.self, forCellWithReuseIdentifier: ChoiceCollectionCell.identifier)
+        collectionview.register(ChoiceCVCell.self, forCellWithReuseIdentifier: ChoiceCVCell.identifier)
         return collectionview
     }()
     
@@ -56,7 +56,7 @@ extension ChoiceCell:UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let image = images[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChoiceCollectionCell.identifier, for: indexPath) as! ChoiceCollectionCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChoiceCVCell.identifier, for: indexPath) as! ChoiceCVCell
         cell.config(image: image)
         
         return cell

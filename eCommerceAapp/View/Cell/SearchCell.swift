@@ -23,6 +23,7 @@ class SearchCell: UICollectionViewCell {
     }()
     private let titleLabel:UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "hloe Love Story Edp 75 Ml KadÄ±n"
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -39,10 +40,22 @@ class SearchCell: UICollectionViewCell {
         label.tintColor = UIColor.systemOrange
         return label
     }()
+    private var buyButton:UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .systemBackground
+        button.setTitle("BUY", for: .normal)
+        button.setTitleColor(UIColor.systemOrange, for: .normal)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.systemOrange.cgColor
+        button.layer.cornerRadius = 20
+        
+        return button
+    }()
     private var stackView:UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
+        stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         stackView.spacing = 10
         
@@ -51,10 +64,16 @@ class SearchCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        contentView.layer.borderWidth = 1
+        contentView.layer.borderColor = UIColor.systemGray2.cgColor
+        contentView.layer.cornerRadius = 20
+        
         contentView.addSubview(image)
+        contentView.addSubview(titleLabel)
         contentView.addSubview(stackView)
-        stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(priceLabel)
+        stackView.addArrangedSubview(buyButton)
     }
     
     required init?(coder: NSCoder) {
@@ -64,15 +83,19 @@ class SearchCell: UICollectionViewCell {
         super.layoutSubviews()
         
         NSLayoutConstraint.activate([
-            image.topAnchor.constraint(equalTo: topAnchor),
+            image.topAnchor.constraint(equalTo: topAnchor, constant: 5),
             image.leadingAnchor.constraint(equalTo: leadingAnchor),
             image.trailingAnchor.constraint(equalTo: trailingAnchor),
             image.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5),
             
-            stackView.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 20),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+            titleLabel.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 5),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor)
         ])
     }
     

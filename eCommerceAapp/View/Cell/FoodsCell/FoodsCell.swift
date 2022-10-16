@@ -16,11 +16,11 @@ class FoodsCell: UITableViewCell {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
-        layout.itemSize = CGSize(width: 120, height: 160)
+        layout.itemSize = CGSize(width: 140, height: 200)
         
         let collectionview = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionview.showsHorizontalScrollIndicator = false
-        collectionview.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionview.register(FoodsCVCell.self, forCellWithReuseIdentifier: FoodsCVCell.identifier)
         return collectionview
     }()
 
@@ -52,9 +52,9 @@ extension FoodsCell:UICollectionViewDataSource, UICollectionViewDelegate {
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FoodsCVCell.identifier, for: indexPath) as! FoodsCVCell
         
-        cell.backgroundColor = .purple
+        cell.layer.cornerRadius = 10
         
         return cell
     }

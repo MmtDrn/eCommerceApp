@@ -26,15 +26,7 @@ class SearchVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-        title = "eCommerce App"
-        
-        view.backgroundColor = .systemBackground
-        collectionview.dataSource = self
-        collectionview.delegate = self
-        
-        view.addSubview(collectionview)
+        configureViews()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -58,5 +50,20 @@ extension SearchVC:UICollectionViewDelegate, UICollectionViewDataSource, UIColle
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (view.frame.width/2)-10, height: view.frame.height/3)
+    }
+}
+
+extension SearchVC {
+    
+    private func configureViews(){
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "eCommerce App"
+        
+        view.backgroundColor = .systemBackground
+        collectionview.dataSource = self
+        collectionview.delegate = self
+        
+        view.addSubview(collectionview)
     }
 }

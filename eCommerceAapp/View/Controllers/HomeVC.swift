@@ -15,6 +15,7 @@ class HomeVC: UIViewController {
     private let tableView:UITableView = {
         let tableview = UITableView()
         tableview.translatesAutoresizingMaskIntoConstraints = false
+        tableview.showsVerticalScrollIndicator = false
         
         tableview.register(ChoiceCell.self, forCellReuseIdentifier: ChoiceCell.identifier)
         tableview.register(ProductCell.self, forCellReuseIdentifier: ProductCell.identifier)
@@ -69,18 +70,19 @@ extension HomeVC:UITableViewDelegate, UITableViewDataSource {
         case .choice:
             return view.frame.size.height/10
         case .productSection:
-            return (view.frame.size.height/10) * 2
+            return (view.frame.size.height/10) * 2.3
         case .foodsSection:
-            return (view.frame.size.height/10) * 2
+            return (view.frame.size.height/10) * 2.3
         }
     }
+    
 }
 
 extension HomeVC {
     
     private func configureViews(){
         navigationController?.navigationBar.prefersLargeTitles = true
-        title = "eCommerce App"
+        navigationItem.title = "eCommerce App"
         
         view.addSubview(tableView)
         tableView.delegate = self
