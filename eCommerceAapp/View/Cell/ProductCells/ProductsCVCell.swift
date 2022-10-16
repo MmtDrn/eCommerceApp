@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class ProductsCVCell: UICollectionViewCell {
     
@@ -17,14 +18,12 @@ class ProductsCVCell: UICollectionViewCell {
         imageview.clipsToBounds = true
         imageview.contentMode = .scaleAspectFill
         imageview.layer.cornerRadius = 10
-        imageview.image = UIImage(named: "choice2")
         return imageview
     }()
     
     private let titleLabel:UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "hloe Love Story Edp 75 Ml KadÄ±n"
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 15)
         label.tintColor = UIColor.label
@@ -33,9 +32,8 @@ class ProductsCVCell: UICollectionViewCell {
     private let priceLabel:UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "649.0 $"
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 13)
+        label.font = .systemFont(ofSize: 15)
         label.textColor = .systemOrange
         return label
     }()
@@ -61,10 +59,19 @@ class ProductsCVCell: UICollectionViewCell {
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            titleLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2),
             
-            priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 3),
-            priceLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            priceLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
+            priceLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            priceLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            priceLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1),
         ])
+    }
+    public func configureViews(product:Result) {
+        guard let url = URL(string: product.productImage) else { return }
+        DispatchQueue.main.async {
+            self.imageView.af.setImage(withURL: url)
+            self.titleLabel.text = product.productName
+            self.priceLabel.text = "\(String(product.newPrice)) TL"
+        }
     }
 }

@@ -17,15 +17,14 @@ class FoodsCVCell: UICollectionViewCell {
         imageview.clipsToBounds = true
         imageview.contentMode = .scaleAspectFill
         imageview.layer.cornerRadius = 10
-        imageview.image = UIImage(named: "header1")
         return imageview
     }()
     
     private let titleLabel:UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "hloe Love Story Edp 75 Ml KadÄ±n"
         label.numberOfLines = 0
+        label.textAlignment = .center
         label.font = .systemFont(ofSize: 15)
         label.tintColor = UIColor.label
         return label
@@ -33,9 +32,8 @@ class FoodsCVCell: UICollectionViewCell {
     private let priceLabel:UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "649.0 $"
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 13)
+        label.font = .systemFont(ofSize: 15)
         label.textColor = .systemOrange
         return label
     }()
@@ -54,18 +52,28 @@ class FoodsCVCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: topAnchor),
-            imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            imageView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 5),
             imageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
             imageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.7),
             
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            titleLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2),
             
-            priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 3),
-            priceLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            priceLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
+            priceLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            priceLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            priceLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1),
         ])
     }
+    public func configureViews(food:Food) {
+        guard let url = URL(string: "http://kasimadalan.pe.hu/yemekler/resimler/\(food.yemek_resim_adi)") else { return }
+        DispatchQueue.main.async {
+            self.imageView.af.setImage(withURL: url)
+            self.titleLabel.text = food.yemek_adi
+            self.priceLabel.text = "\(food.yemek_fiyat) TL"
+        }
+    }
+    //http://kasimadalan.pe.hu/yemekler/resimler/
     
 }

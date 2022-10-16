@@ -11,11 +11,15 @@ class HomeVC: UIViewController {
     
     private var headerView:HeaderView? = nil
     private var sections:[SectionType] = [.choice, .productSection, .foodsSection]
+    private let viewModel:NetworkViewModel
+    private var foods:[Food] = []
+    private var products:[Result] = []
     
     private let tableView:UITableView = {
         let tableview = UITableView()
         tableview.translatesAutoresizingMaskIntoConstraints = false
         tableview.showsVerticalScrollIndicator = false
+        tableview.sectionHeaderTopPadding = 1
         
         tableview.register(ChoiceCell.self, forCellReuseIdentifier: ChoiceCell.identifier)
         tableview.register(ProductCell.self, forCellReuseIdentifier: ProductCell.identifier)
@@ -23,10 +27,21 @@ class HomeVC: UIViewController {
         
         return tableview
     }()
-
+    
+    init(viewModel:NetworkViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel.NetworkViewModelProtocol = self
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -36,7 +51,7 @@ class HomeVC: UIViewController {
 }
 
 extension HomeVC:UITableViewDelegate, UITableViewDataSource {
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
@@ -52,10 +67,14 @@ extension HomeVC:UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: ChoiceCell.identifier, for: indexPath) as! ChoiceCell
             return cell
         case .productSection:
-            let cell = tableView.dequeueReusableCell(withIdentifier: ProductCell.identifier, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: ProductCell.identifier, for: indexPath) as! ProductCell
+            cell.configProducts(products: products)
+            cell.delegate = self
             return cell
         case .foodsSection:
-            let cell = tableView.dequeueReusableCell(withIdentifier: FoodsCell.identifier, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: FoodsCell.identifier, for: indexPath) as! FoodsCell
+            cell.setFoods(foods: self.foods)
+            cell.delegate = self
             return cell
         }
     }
@@ -63,6 +82,7 @@ extension HomeVC:UITableViewDelegate, UITableViewDataSource {
         let section = sections[section]
         return section.title
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let section = sections[indexPath.section]
         switch section {
@@ -75,10 +95,9 @@ extension HomeVC:UITableViewDelegate, UITableViewDataSource {
             return (view.frame.size.height/10) * 2.3
         }
     }
-    
 }
 
-extension HomeVC {
+extension HomeVC: NetworkViewModelProtocol, ProductCellProtocol, FoodCellProtocol {
     
     private func configureViews(){
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -89,5 +108,20 @@ extension HomeVC {
         tableView.dataSource = self
         headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.frame.height / 4))
         tableView.tableHeaderView = headerView
+        viewModel.fectData()
+    }
+    func updateProducts(products: [Result]) {
+        self.products = products
+        self.tableView.reloadData()
+    }
+    func updateFoods(foods: [Food]) {
+        self.foods = foods
+        self.tableView.reloadData()
+    }
+    func toDetail(item: Item) {
+        let detailVC = DetailVC()
+        detailVC.modalPresentationStyle = .fullScreen
+        detailVC.setItem(item: item)
+        present(detailVC, animated: true)
     }
 }

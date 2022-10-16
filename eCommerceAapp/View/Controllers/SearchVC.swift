@@ -9,7 +9,7 @@ import UIKit
 
 class SearchVC: UIViewController {
     
-    private var products:[AllModel] = []
+    private var products:[Item] = []
     
     private let collectionview:UICollectionView = {
         

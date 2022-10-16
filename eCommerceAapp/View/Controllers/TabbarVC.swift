@@ -13,6 +13,7 @@ enum TabbarItem:Int {
     case Basket
     case Settings
     
+    
     var title:String {
         switch self {
         case .Home: return "Home"
@@ -33,7 +34,7 @@ enum TabbarItem:Int {
     
     var viewController:UIViewController {
         switch self {
-        case .Home: return HomeVC()
+        case .Home: return HomeVC(viewModel: NetworkViewModel(services: NetworkServices()))
         case .Search: return SearchVC()
         case .Basket: return BasketVC()
         case .Settings: return SettingsVC()

@@ -16,7 +16,7 @@ enum SectionType {
     var title:String? {
         switch self {
         case .choice:
-            return nil
+            return "Categories"
         case .productSection:
             return "Products"
         case .foodsSection:

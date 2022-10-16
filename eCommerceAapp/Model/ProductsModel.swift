@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 // MARK: - Products
 struct Products: Codable {
@@ -23,7 +24,16 @@ struct Result: Codable {
     let newPrice: Int
     let productImage: String
     let quantity: Int
-    let currentStore: JSONNull?
+    
+    init(json:JSON) {
+        self.id = json["id"].intValue
+        self.productName = json["productName"].stringValue
+        self.type = json["type"].stringValue
+        self.oldPrice = json["oldPrice"].doubleValue
+        self.newPrice = json["newPrice"].intValue
+        self.productImage = json["productImage"].stringValue
+        self.quantity = json["quantity"].intValue
+    }
 }
 
 // MARK: - Encode/decode helpers

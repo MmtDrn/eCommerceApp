@@ -16,8 +16,7 @@ class ChoiceCell: UITableViewCell {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
-        layout.itemSize = CGSize(width: 80, height: 80)
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         
         let collectionview = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionview.isPagingEnabled = true
@@ -45,7 +44,7 @@ class ChoiceCell: UITableViewCell {
     }
 }
 
-extension ChoiceCell:UICollectionViewDelegate, UICollectionViewDataSource {
+extension ChoiceCell:UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -64,5 +63,8 @@ extension ChoiceCell:UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let image = images[indexPath.row]
         print(image)
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (frame.width/4) - 25, height: (frame.height) - 20)
     }
 }

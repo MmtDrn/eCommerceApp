@@ -110,7 +110,7 @@ class BasketCell: UITableViewCell {
             stackView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.3),
             stackView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.25),
             
-            priceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
+            priceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
             priceLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15)
         ])
     }

@@ -7,16 +7,21 @@
 
 import UIKit
 
+protocol FoodCellProtocol:AnyObject {
+    func toDetail(item:Item)
+}
+
 class FoodsCell: UITableViewCell {
     
     public static let identifier = "FoodsCell"
+    private var foods:[Food] = []
+    weak var delegate:ProductCellProtocol?
     
     private let collectionView:UICollectionView = {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
-        layout.itemSize = CGSize(width: 140, height: 200)
         
         let collectionview = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionview.showsHorizontalScrollIndicator = false
@@ -40,22 +45,35 @@ class FoodsCell: UITableViewCell {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
+    public func setFoods(foods:[Food]){
+        self.foods = foods
+        self.collectionView.reloadData()
+    }
 }
 
-extension FoodsCell:UICollectionViewDataSource, UICollectionViewDelegate {
+extension FoodsCell:UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        return foods.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+        let food = foods[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FoodsCVCell.identifier, for: indexPath) as! FoodsCVCell
         
         cell.layer.cornerRadius = 10
+        cell.configureViews(food: food)
         
         return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let food = foods[indexPath.row]
+        let item = Item(food: food)
+        self.delegate?.toDetail(item: item)
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: frame.width/3, height: frame.height)
     }
 }

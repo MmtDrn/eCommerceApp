@@ -15,34 +15,40 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="IUi-BG-2n8">
-                                <rect key="frame" x="0.0" y="88" width="414" height="652.5"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N1I-GH-LBH">
-                                <rect key="frame" x="0.0" y="740.5" width="414" height="72.5"/>
-                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
-                            </view>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="IUi-BG-2n8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="8UE-Km-00T"/>
-                            <constraint firstItem="IUi-BG-2n8" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" multiplier="0.9" id="HAr-f9-q9g"/>
-                            <constraint firstItem="N1I-GH-LBH" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" multiplier="0.1" id="HxF-uP-ncm"/>
-                            <constraint firstItem="IUi-BG-2n8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="SPc-dC-Bys"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="N1I-GH-LBH" secondAttribute="trailing" id="Tfj-bM-MDL"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="IUi-BG-2n8" secondAttribute="trailing" id="bQ4-Tf-5aW"/>
-                            <constraint firstItem="N1I-GH-LBH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="kuO-d6-uZI"/>
-                            <constraint firstItem="N1I-GH-LBH" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="vW2-LV-Gb8"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="rVt-zv-xDA"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1865.217391304348" y="67.633928571428569"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="jfm-Il-DXQ">
+            <objects>
+                <viewController id="SW5-Ea-Syl" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ldu-iv-Tyy">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V2i-hw-9vA">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Title" id="0bU-js-Vdf">
+                                        <barButtonItem key="leftBarButtonItem" title="Item" image="arrow.backward" catalog="system" id="WmP-26-0rW"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="hDU-1d-VfA"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F2E-qx-ehg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2725" y="48"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Avh-DQ-bc1">
@@ -85,11 +91,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.backward" catalog="system" width="128" height="98"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

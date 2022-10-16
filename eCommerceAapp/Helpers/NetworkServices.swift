@@ -1,19 +1,20 @@
 //
-//  ViewController.swift
+//  NetworkServices.swift
 //  eCommerceAapp
 //
-//  Created by mehmet duran on 14.10.2022.
+//  Created by mehmet duran on 16.10.2022.
 //
 
-import UIKit
+import Foundation
 import Alamofire
 import SwiftyJSON
 
-class ViewController: UIViewController {
+protocol NetworkServicesProtocol {
+    func fetchFoods(completion : @escaping([Food]) -> ())
+    func fetchProducts(completion: @escaping([Result]) -> ())
+}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+class NetworkServices: NetworkServicesProtocol {
     
     func fetchFoods(completion : @escaping([Food]) -> ()) {
         
@@ -57,7 +58,5 @@ class ViewController: UIViewController {
                 print("-------" + error.localizedDescription + "-------")
             }
         }
-        
     }
 }
-
