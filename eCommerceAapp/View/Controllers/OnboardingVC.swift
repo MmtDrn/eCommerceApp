@@ -9,7 +9,7 @@ import UIKit
 
 class OnboardingVC: UIViewController {
     
-    private let images = ["ecommerce1","ecommerce2","ecommerce3"]
+    private let images = ["ecommerce1","ecommerce3"]
     
     private let collectionView:UICollectionView = {
         

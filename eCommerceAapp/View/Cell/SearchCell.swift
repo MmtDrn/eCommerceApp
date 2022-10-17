@@ -16,7 +16,7 @@ class SearchCell: UICollectionViewCell {
         let imageview = UIImageView()
         imageview.translatesAutoresizingMaskIntoConstraints = false
         imageview.clipsToBounds = true
-        imageview.contentMode = .scaleAspectFill
+        imageview.contentMode = .scaleAspectFit
         imageview.layer.cornerRadius = 20
         imageview.image = UIImage(named: "choice2")
         return imageview
@@ -27,7 +27,7 @@ class SearchCell: UICollectionViewCell {
         label.text = "hloe Love Story Edp 75 Ml KadÄ±n"
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 20)
+        label.font = .systemFont(ofSize: 22)
         label.tintColor = UIColor.label
         return label
     }()
@@ -36,7 +36,7 @@ class SearchCell: UICollectionViewCell {
         label.text = "649.0 $"
         label.numberOfLines = 0
         label.textAlignment = .left
-        label.font = .systemFont(ofSize: 15)
+        label.font = .systemFont(ofSize: 20)
         label.tintColor = UIColor.systemOrange
         return label
     }()
@@ -92,17 +92,17 @@ class SearchCell: UICollectionViewCell {
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
             stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor)
         ])
     }
     
-    public func configureViews(imageURL:String,title:String,price:String){
-        guard let url = URL(string: imageURL) else { return }
+    public func configureViews(item:Item){
+        guard let url = URL(string: item.imageURL) else { return }
         image.af.setImage(withURL: url)
-        titleLabel.text = title
-        priceLabel.text = price
+        titleLabel.text = item.title
+        priceLabel.text = item.price
     }
 }
