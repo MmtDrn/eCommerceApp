@@ -8,9 +8,15 @@
 import UIKit
 import AlamofireImage
 
+protocol SearchCellProtocol:AnyObject {
+    func addBasket(index:Int)
+}
+
 class SearchCell: UICollectionViewCell {
     
     static var identifier = "SearchCell"
+    weak var SearchCellProtocol:SearchCellProtocol?
+    var index:Int?
     
     private let image:UIImageView = {
         let imageview = UIImageView()
@@ -49,6 +55,7 @@ class SearchCell: UICollectionViewCell {
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.systemOrange.cgColor
         button.layer.cornerRadius = 20
+        button.addTarget(self, action: #selector(buyClicked), for: .touchUpInside)
         
         return button
     }()
@@ -104,5 +111,10 @@ class SearchCell: UICollectionViewCell {
         image.af.setImage(withURL: url)
         titleLabel.text = item.title
         priceLabel.text = item.price
+    }
+    
+    @objc private func buyClicked(){
+        guard let index = index else { return }
+        self.SearchCellProtocol?.addBasket(index: index)
     }
 }

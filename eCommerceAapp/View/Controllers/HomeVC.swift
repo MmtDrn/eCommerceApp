@@ -11,9 +11,10 @@ class HomeVC: UIViewController {
     
     private var headerView:HeaderView? = nil
     private var sections:[SectionType] = [.choice, .productSection, .foodsSection]
-    private let viewModel:NetworkViewModel
     private var foods:[Food] = []
     private var products:[Result] = []
+    
+    private let viewModel:NetworkViewModel
     
     private let tableView:UITableView = {
         let tableview = UITableView()

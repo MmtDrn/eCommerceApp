@@ -23,7 +23,7 @@ class TotalPriceView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "649.0 $"
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 20)
+        label.font = .boldSystemFont(ofSize: 20)
         label.tintColor = UIColor.systemOrange
         return label
     }()
@@ -56,6 +56,8 @@ class TotalPriceView: UIView {
         addSubview(stackView)
         stackView.addArrangedSubview(totalLabel)
         stackView.addArrangedSubview(priceLabel)
+        
+        confirmButton.addTarget(self, action: #selector(calculateTotalPrice), for: .touchUpInside)
     }
     
     override func layoutSubviews() {
@@ -77,5 +79,7 @@ class TotalPriceView: UIView {
     required init?(coder: NSCoder) {
         fatalError()
     }
-    
+    @objc func calculateTotalPrice(){
+        print("clicked")
+    }
 }

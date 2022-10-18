@@ -9,6 +9,9 @@ import UIKit
 
 class BasketVC: UIViewController {
     
+    private var items:[BasketItems] = []
+    private let viewModel:CoreDataViewModel
+    
     private let tableView:UITableView = {
         let tableview = UITableView()
         tableview.translatesAutoresizingMaskIntoConstraints = false
@@ -25,6 +28,16 @@ class BasketVC: UIViewController {
         return view
     }()
     
+    init(viewModel:CoreDataViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel.CoreDataViewModelProtocol = self
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -32,6 +45,10 @@ class BasketVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         constraintViews()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.fetchCoreData()
     }
 }
 
@@ -41,11 +58,13 @@ extension BasketVC:UITableViewDelegate,UITableViewDataSource {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return items.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        let item = items[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: BasketCell.identifier, for: indexPath) as! BasketCell
+        cell.configureViews(item: item)
         
         return cell
     }
@@ -54,7 +73,7 @@ extension BasketVC:UITableViewDelegate,UITableViewDataSource {
     }
 }
 
-extension BasketVC {
+extension BasketVC: CoreDataViewModelProtocol {
     private func configureView(){
         
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -65,6 +84,8 @@ extension BasketVC {
         view.addSubview(totalPriceView)
         tableView.dataSource = self
         tableView.delegate = self
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .done, target: self, action: #selector(allDelet))
     }
     
     private func constraintViews(){
@@ -80,5 +101,18 @@ extension BasketVC {
             totalPriceView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             totalPriceView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.1)
         ])
+    }
+    @objc func allDelet(){
+        
+        let alert = UIAlertController(title: "Are you sure?", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { action in
+            self.viewModel.coreDataServices.deleteAllItem(items: self.items)
+            self.viewModel.fetchCoreData()
+        }))
+        present(alert, animated: true)
+    }
+    func fetchCoreData(items: [BasketItems]) {
+        self.items = items
+        self.tableView.reloadData()
     }
 }

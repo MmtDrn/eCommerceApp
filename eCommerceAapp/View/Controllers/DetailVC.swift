@@ -115,6 +115,8 @@ extension DetailVC {
         view.addSubview(stackView)
         stackView.addArrangedSubview(priceLabel)
         stackView.addArrangedSubview(buyButton)
+        
+        self.buyButton.addTarget(self, action: #selector(addBasket), for: .touchUpInside)
     }
     @objc func clicked(){
         dismiss(animated: true)
@@ -129,5 +131,10 @@ extension DetailVC {
     }
     public func setItem(item:Item){
         self.item = item
+    }
+    @objc private func addBasket(){
+        guard let item = item else { return }
+        CoreDataServices.shared.addItem(item: item)
+        print("add succes")
     }
 }

@@ -37,7 +37,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Title" id="0bU-js-Vdf">
-                                        <barButtonItem key="leftBarButtonItem" title="Item" image="arrow.backward" catalog="system" id="WmP-26-0rW"/>
+                                        <barButtonItem key="leftBarButtonItem" title="Item" image="trash" catalog="system" id="WmP-26-0rW"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -91,7 +91,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="arrow.backward" catalog="system" width="128" height="98"/>
+        <image name="trash" catalog="system" width="121" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

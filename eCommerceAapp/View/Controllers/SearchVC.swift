@@ -10,7 +10,8 @@ import UIKit
 class SearchVC: UIViewController {
     
     private var items:[Item] = []
-    private let viewModel:NetworkViewModel
+    private let netwokViewModel:NetworkViewModel
+    private let coreDataViewModel:CoreDataViewModel
     
     private let collectionview:UICollectionView = {
         
@@ -26,7 +27,7 @@ class SearchVC: UIViewController {
     }()
     private let searchController:UISearchController = {
         
-        let controller = UISearchController(searchResultsController: SearchResultVC())
+        let controller = UISearchController(searchResultsController: SearchResultVC(coreDataViewModel: CoreDataViewModel(coreDataServices: CoreDataServices())))
         controller.searchBar.placeholder = "Write what you are looking for"
         controller.searchBar.searchBarStyle = .minimal
         return controller
@@ -40,10 +41,11 @@ class SearchVC: UIViewController {
         super.viewDidLayoutSubviews()
         collectionview.frame = view.bounds
     }
-    init(viewModel:NetworkViewModel) {
-        self.viewModel = viewModel
+    init(viewModel:NetworkViewModel,coreDataViewModel:CoreDataViewModel) {
+        self.netwokViewModel = viewModel
+        self.coreDataViewModel = coreDataViewModel
         super.init(nibName: nil, bundle: nil)
-        self.viewModel.NetworkViewModelProtocol = self
+        self.netwokViewModel.NetworkViewModelProtocol = self
     }
     
     required init?(coder: NSCoder) {
@@ -65,6 +67,9 @@ extension SearchVC:UICollectionViewDelegate, UICollectionViewDataSource, UIColle
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCell.identifier, for: indexPath) as! SearchCell
         cell.configureViews(item: item)
         
+        cell.index = indexPath.row
+        cell.SearchCellProtocol = self
+        
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -72,8 +77,12 @@ extension SearchVC:UICollectionViewDelegate, UICollectionViewDataSource, UIColle
     }
 }
 
-extension SearchVC: NetworkViewModelProtocol, UISearchResultsUpdating {
-
+extension SearchVC: NetworkViewModelProtocol, UISearchResultsUpdating, SearchCellProtocol {
+    
+    func addBasket(index: Int) {
+        let item = items[index]
+        coreDataViewModel.coreDataServices.addItem(item: item)
+    }
     private func configureViews(){
         
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -84,7 +93,7 @@ extension SearchVC: NetworkViewModelProtocol, UISearchResultsUpdating {
         collectionview.delegate = self
         
         view.addSubview(collectionview)
-        viewModel.fectData()
+        netwokViewModel.fectData()
         
         navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
@@ -95,6 +104,7 @@ extension SearchVC: NetworkViewModelProtocol, UISearchResultsUpdating {
             self.items.append(item)
         }
         self.collectionview.reloadData()
+        self.items.shuffle()
     }
     
     func updateProducts(products: [Result]) {
@@ -103,6 +113,7 @@ extension SearchVC: NetworkViewModelProtocol, UISearchResultsUpdating {
             self.items.append(item)
         }
         self.collectionview.reloadData()
+        self.items.shuffle()
     }
     func updateSearchResults(for searchController: UISearchController) {
         

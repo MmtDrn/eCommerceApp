@@ -7,6 +7,8 @@
 
 import UIKit
 
+let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?

@@ -35,8 +35,8 @@ enum TabbarItem:Int {
     var viewController:UIViewController {
         switch self {
         case .Home: return HomeVC(viewModel: NetworkViewModel(services: NetworkServices()))
-        case .Search: return SearchVC(viewModel: NetworkViewModel(services: NetworkServices()))
-        case .Basket: return BasketVC()
+        case .Search: return SearchVC(viewModel: NetworkViewModel(services: NetworkServices()), coreDataViewModel: CoreDataViewModel(coreDataServices: CoreDataServices()))
+        case .Basket: return BasketVC(viewModel: CoreDataViewModel(coreDataServices: CoreDataServices()))
         case .Settings: return SettingsVC()
         }
     }

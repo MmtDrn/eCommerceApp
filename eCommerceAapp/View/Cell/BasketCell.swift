@@ -35,7 +35,7 @@ class BasketCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "649.0 $"
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 20)
+        label.font = .boldSystemFont(ofSize: 20)
         label.tintColor = UIColor.systemOrange
         return label
     }()
@@ -47,14 +47,16 @@ class BasketCell: UITableViewCell {
         
         return button
     }()
-    private var countButton:UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .systemGray6
-        button.layer.cornerRadius = 20
-        button.setTitle("0", for: .normal)
-        button.setTitleColor(UIColor.label, for: .normal)
+    private var countLabel:UILabel = {
+        let label = UILabel()
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 20
+        label.backgroundColor = .systemGray6
+        label.font = .boldSystemFont(ofSize: 15)
+        label.textAlignment = .center
+        label.text = "0"
         
-        return button
+        return label
     }()
     private var minusButton:UIButton = {
         let button = UIButton()
@@ -85,7 +87,7 @@ class BasketCell: UITableViewCell {
         contentView.addSubview(priceLabel)
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(minusButton)
-        stackView.addArrangedSubview(countButton)
+        stackView.addArrangedSubview(countLabel)
         stackView.addArrangedSubview(plusButton)
         
     }
@@ -98,7 +100,7 @@ class BasketCell: UITableViewCell {
         NSLayoutConstraint.activate([
             image.topAnchor.constraint(equalTo: topAnchor, constant: 5),
             image.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-            image.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 5),
+            image.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
             image.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.3),
             
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
@@ -111,14 +113,14 @@ class BasketCell: UITableViewCell {
             stackView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.25),
             
             priceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-            priceLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15)
+            priceLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
         ])
     }
     
-    public func configureViews(imagelURL:String,title:String,price:String) {
-        guard let url = URL(string: imagelURL) else { return }
+    public func configureViews(item:BasketItems) {
+        guard let url = URL(string: item.imageURL ?? "") else { return }
         image.af.setImage(withURL: url)
-        self.titleLabel.text = title
-        self.priceLabel.text = price
+        self.titleLabel.text = item.title
+        self.priceLabel.text = item.price
     }
 }

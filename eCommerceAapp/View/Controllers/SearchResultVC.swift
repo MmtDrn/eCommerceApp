@@ -10,6 +10,7 @@ import UIKit
 class SearchResultVC: UIViewController {
 
     var items:[Item] = []
+    private let coreDataViewModel:CoreDataViewModel
     
     let collectionview:UICollectionView = {
         
@@ -23,6 +24,14 @@ class SearchResultVC: UIViewController {
         
         return collectionview
     }()
+    init(coreDataViewModel:CoreDataViewModel) {
+        self.coreDataViewModel = coreDataViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +57,9 @@ extension SearchResultVC:UICollectionViewDelegate, UICollectionViewDataSource, U
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCell.identifier, for: indexPath) as! SearchCell
         cell.configureViews(item: item)
         
+        cell.index = indexPath.row
+        cell.SearchCellProtocol = self
+        
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -55,7 +67,7 @@ extension SearchResultVC:UICollectionViewDelegate, UICollectionViewDataSource, U
     }
 }
 
-extension SearchResultVC {
+extension SearchResultVC: SearchCellProtocol {
 
     private func configureViews(){
         
@@ -67,5 +79,9 @@ extension SearchResultVC {
         collectionview.delegate = self
         
         view.addSubview(collectionview)
+    }
+    func addBasket(index: Int) {
+        let item = items[index]
+        coreDataViewModel.coreDataServices.addItem(item: item)
     }
 }
