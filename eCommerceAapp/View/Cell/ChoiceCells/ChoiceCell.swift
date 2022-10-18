@@ -7,10 +7,17 @@
 
 import UIKit
 
+protocol ChoiceCellProtocol:AnyObject {
+    func toCategoryVC(category:CategoryModel)
+}
+
 class ChoiceCell: UITableViewCell {
     
     public static let identifier = "ChoiceCell"
-    private var images = ["choice1","choice2","choice3","choice4"]
+    private var categories:[CategoryModel] = []
+    
+    weak var ChoiceCellProtocol:ChoiceCellProtocol?
+    
     
     private let collectionView:UICollectionView = {
         
@@ -41,6 +48,16 @@ class ChoiceCell: UITableViewCell {
         contentView.addSubview(collectionView)
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        //"choice1","choice2","choice3","choice4"
+        let choice1 = CategoryModel(imageName: "choice1", name: "Products", vc: CategoryVC(coreDataViewModel: CoreDataViewModel(coreDataServices: CoreDataServices())))
+        let choice2 = CategoryModel(imageName: "choice2", name: "Foods", vc: CategoryVC(coreDataViewModel: CoreDataViewModel(coreDataServices: CoreDataServices())))
+        let choice3 = CategoryModel(imageName: "choice3", name: "Coming soon..", vc: nil)
+        let choice4 = CategoryModel(imageName: "choice4", name: "Coming soon..", vc: nil)
+        categories.append(choice1)
+        categories.append(choice2)
+        categories.append(choice3)
+        categories.append(choice4)
     }
 }
 
@@ -50,19 +67,19 @@ extension ChoiceCell:UICollectionViewDelegate, UICollectionViewDataSource, UICol
         return 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return categories.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let image = images[indexPath.row]
+        let categorie = categories[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChoiceCVCell.identifier, for: indexPath) as! ChoiceCVCell
-        cell.config(image: image)
+        cell.config(categorie: categorie)
         
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let image = images[indexPath.row]
-        print(image)
+        let categorie = categories[indexPath.row]
+        self.ChoiceCellProtocol?.toCategoryVC(category: categorie)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (frame.width/4) - 25, height: (frame.height) - 20)

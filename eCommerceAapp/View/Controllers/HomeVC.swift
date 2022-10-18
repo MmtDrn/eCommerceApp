@@ -66,6 +66,7 @@ extension HomeVC:UITableViewDelegate, UITableViewDataSource {
             
         case .choice:
             let cell = tableView.dequeueReusableCell(withIdentifier: ChoiceCell.identifier, for: indexPath) as! ChoiceCell
+            cell.ChoiceCellProtocol = self
             return cell
         case .productSection:
             let cell = tableView.dequeueReusableCell(withIdentifier: ProductCell.identifier, for: indexPath) as! ProductCell
@@ -89,7 +90,7 @@ extension HomeVC:UITableViewDelegate, UITableViewDataSource {
         switch section {
             
         case .choice:
-            return view.frame.size.height/10
+            return view.frame.size.height/7.5
         case .productSection:
             return (view.frame.size.height/10) * 2.3
         case .foodsSection:
@@ -98,7 +99,7 @@ extension HomeVC:UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension HomeVC: NetworkViewModelProtocol, ProductCellProtocol, FoodCellProtocol {
+extension HomeVC: NetworkViewModelProtocol, ProductCellProtocol, FoodCellProtocol,ChoiceCellProtocol {
     
     private func configureViews(){
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -124,5 +125,22 @@ extension HomeVC: NetworkViewModelProtocol, ProductCellProtocol, FoodCellProtoco
         detailVC.modalPresentationStyle = .fullScreen
         detailVC.setItem(item: item)
         present(detailVC, animated: true)
+    }
+    func toCategoryVC(category: CategoryModel) {
+        if category.name == "Products" {
+            let categorieVC = category.vc as! CategoryVC
+            categorieVC.modalPresentationStyle = .fullScreen
+            categorieVC.setItemsProduct(products: self.products)
+            present(categorieVC, animated: true)
+        }else if category.name == "Foods"{
+            let categorieVC = category.vc as! CategoryVC
+            categorieVC.modalPresentationStyle = .fullScreen
+            categorieVC.setItemsFood(foods: self.foods)
+            present(categorieVC, animated: true)
+        }else{
+            let alert = UIAlertController(title: "Coming Soon..", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Okey", style: .default))
+            present(alert, animated: true)
+        }
     }
 }

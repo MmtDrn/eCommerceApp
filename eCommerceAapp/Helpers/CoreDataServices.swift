@@ -39,6 +39,7 @@ class CoreDataServices: CoreDataServiceProtocol {
         basketItem.imageURL = item.imageURL
         basketItem.title = item.title
         basketItem.price = item.price
+        basketItem.count = 1
         
         appDelegate.saveContext()
     }

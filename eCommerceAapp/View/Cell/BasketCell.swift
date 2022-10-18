@@ -8,9 +8,23 @@
 import UIKit
 import AlamofireImage
 
+protocol BasketCellProtocol:AnyObject {
+    func plusButton(count:Int, index:Int)
+}
+
 class BasketCell: UITableViewCell {
     
     static let identifier = "BasketCell"
+    weak var BasketCellProtocol:BasketCellProtocol?
+    private var count = 1
+    var index:Int?
+    
+    var item:BasketItems? {
+        didSet{
+            self.configureViews()
+            self.countLabel.text = "\(item!.count)"
+        }
+    }
     
     private let image:UIImageView = {
         let imageview = UIImageView()
@@ -44,6 +58,7 @@ class BasketCell: UITableViewCell {
         button.backgroundColor = .systemBackground
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.tintColor = UIColor.orange
+        button.addTarget(self, action: #selector(tapped), for: .touchUpInside)
         
         return button
     }()
@@ -54,7 +69,7 @@ class BasketCell: UITableViewCell {
         label.backgroundColor = .systemGray6
         label.font = .boldSystemFont(ofSize: 15)
         label.textAlignment = .center
-        label.text = "0"
+        label.text = "1"
         
         return label
     }()
@@ -117,10 +132,33 @@ class BasketCell: UITableViewCell {
         ])
     }
     
-    public func configureViews(item:BasketItems) {
+    private func configureViews() {
+        guard let item = item else { return }
         guard let url = URL(string: item.imageURL ?? "") else { return }
+        guard let price = item.price else { return }
+        
+        let price1 = Int16(price)!*item.count
+        
         image.af.setImage(withURL: url)
         self.titleLabel.text = item.title
-        self.priceLabel.text = item.price
+        self.priceLabel.text = "\(price1)"
+        self.countLabel.text = "\(item.count)"
+    }
+    
+//    public func configureViews(item:BasketItems) {
+//        guard let url = URL(string: item.imageURL ?? "") else { return }
+//        guard let price = item.price else { return }
+//        image.af.setImage(withURL: url)
+//        self.titleLabel.text = item.title
+//        self.priceLabel.text = price + " TL"
+//    }
+    
+    @objc func tapped(){
+        
+        self.count += 1
+        self.countLabel.text = "\(self.count)"
+        guard let index = index else { return }
+
+        self.BasketCellProtocol?.plusButton(count: self.count, index: index)
     }
 }

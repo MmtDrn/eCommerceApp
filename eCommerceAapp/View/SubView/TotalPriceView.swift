@@ -82,4 +82,8 @@ class TotalPriceView: UIView {
     @objc func calculateTotalPrice(){
         print("clicked")
     }
+    public func setTotalPrice(totalPrice:Int){
+        
+        self.priceLabel.text = "\(totalPrice) TL"
+    }
 }

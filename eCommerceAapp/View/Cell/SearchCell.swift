@@ -108,9 +108,10 @@ class SearchCell: UICollectionViewCell {
     
     public func configureViews(item:Item){
         guard let url = URL(string: item.imageURL) else { return }
+        
         image.af.setImage(withURL: url)
         titleLabel.text = item.title
-        priceLabel.text = item.price
+        priceLabel.text = "\(item.price) TL"
     }
     
     @objc private func buyClicked(){
