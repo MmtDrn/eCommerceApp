@@ -154,12 +154,14 @@ extension BasketVC: CoreDataViewModelProtocol,BasketCellProtocol, ConfirmBasketP
     }
     func confirmBasket() {
         
-        let alet = UIAlertController(title: nil, message: "Your shopping cart has been confirmed.", preferredStyle: .alert)
+        let alet = UIAlertController(title: "\(totolPrice) TL", message: "Your shopping cart has been confirmed.", preferredStyle: .alert)
         alet.addAction(UIAlertAction(title: "Okey", style: .default, handler: { action in
             self.viewModel.coreDataServices.deleteAllItem(items: self.items)
             self.viewModel.fetchCoreData()
             self.tableView.reloadData()
-            self.totalPriceView.setTotalPrice(totalPrice: 0)
+            DispatchQueue.main.async {
+                self.totalPriceView.setTotalPrice(totalPrice: 0)
+            }
         }))
         present(alet, animated: true)
     }
