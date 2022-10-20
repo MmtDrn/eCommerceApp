@@ -32,6 +32,7 @@ class BasketVC: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.viewModel.CoreDataViewModelProtocol = self
+        totalPriceView.ConfirmBasketProtocol = self
     }
     
     required init?(coder: NSCoder) {
@@ -80,7 +81,8 @@ extension BasketVC:UITableViewDelegate,UITableViewDataSource {
     }
 }
 
-extension BasketVC: CoreDataViewModelProtocol,BasketCellProtocol {
+extension BasketVC: CoreDataViewModelProtocol,BasketCellProtocol, ConfirmBasketProtocol {
+    
     private func configureView(){
         
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -150,4 +152,16 @@ extension BasketVC: CoreDataViewModelProtocol,BasketCellProtocol {
         self.tableView.reloadData()
         
     }
+    func confirmBasket() {
+        
+        let alet = UIAlertController(title: nil, message: "Your shopping cart has been confirmed.", preferredStyle: .alert)
+        alet.addAction(UIAlertAction(title: "Okey", style: .default, handler: { action in
+            self.viewModel.coreDataServices.deleteAllItem(items: self.items)
+            self.viewModel.fetchCoreData()
+            self.tableView.reloadData()
+            self.totalPriceView.setTotalPrice(totalPrice: 0)
+        }))
+        present(alet, animated: true)
+    }
+    
 }

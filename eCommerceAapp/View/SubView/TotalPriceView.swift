@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol ConfirmBasketProtocol:AnyObject {
+    func confirmBasket()
+}
+
 class TotalPriceView: UIView {
+    
+    weak var ConfirmBasketProtocol:ConfirmBasketProtocol?
     
     private let totalLabel:UILabel = {
         let label = UILabel()
@@ -80,7 +86,7 @@ class TotalPriceView: UIView {
         fatalError()
     }
     @objc func calculateTotalPrice(){
-        print("clicked")
+        self.ConfirmBasketProtocol?.confirmBasket()
     }
     public func setTotalPrice(totalPrice:Int){
         

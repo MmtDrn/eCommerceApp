@@ -67,7 +67,9 @@ class FoodsCVCell: UICollectionViewCell {
         ])
     }
     public func configureViews(food:Food) {
-        guard let url = URL(string: "http://kasimadalan.pe.hu/yemekler/resimler/\(food.yemek_resim_adi)") else { return }
+        let route = Route.fetchFoodImage(food.yemek_resim_adi)
+        guard let url = URL(string: Route.baseUrlFoods + route.description) else { return }
+        
         DispatchQueue.main.async {
             self.imageView.af.setImage(withURL: url)
             self.titleLabel.text = food.yemek_adi

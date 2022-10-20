@@ -126,7 +126,7 @@ extension DetailVC {
             guard let url = URL(string: item.imageURL) else {return}
             self.image.af.setImage(withURL: url)
             self.titleLabel.text = item.title
-            self.priceLabel.text = item.price
+            self.priceLabel.text = "\(item.price) TL"
         }
     }
     public func setItem(item:Item){

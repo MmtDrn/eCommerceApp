@@ -1,5 +1,5 @@
 //
-//  ChoiceCell.swift
+//  CategoryCell.swift
 //  eCommerceAapp
 //
 //  Created by mehmet duran on 15.10.2022.
@@ -7,16 +7,16 @@
 
 import UIKit
 
-protocol ChoiceCellProtocol:AnyObject {
+protocol CategoryCellProtocol:AnyObject {
     func toCategoryVC(category:CategoryModel)
 }
 
-class ChoiceCell: UITableViewCell {
+class CategoryCell: UITableViewCell {
     
-    public static let identifier = "ChoiceCell"
+    public static let identifier = "CategoryCell"
     private var categories:[CategoryModel] = []
     
-    weak var ChoiceCellProtocol:ChoiceCellProtocol?
+    weak var ChoiceCellProtocol:CategoryCellProtocol?
     
     
     private let collectionView:UICollectionView = {
@@ -28,7 +28,7 @@ class ChoiceCell: UITableViewCell {
         let collectionview = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionview.isPagingEnabled = true
         collectionview.isScrollEnabled = false
-        collectionview.register(ChoiceCVCell.self, forCellWithReuseIdentifier: ChoiceCVCell.identifier)
+        collectionview.register(CategoryCVCell.self, forCellWithReuseIdentifier: CategoryCVCell.identifier)
         return collectionview
     }()
     
@@ -61,7 +61,7 @@ class ChoiceCell: UITableViewCell {
     }
 }
 
-extension ChoiceCell:UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension CategoryCell:UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -72,7 +72,7 @@ extension ChoiceCell:UICollectionViewDelegate, UICollectionViewDataSource, UICol
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let categorie = categories[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChoiceCVCell.identifier, for: indexPath) as! ChoiceCVCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCVCell.identifier, for: indexPath) as! CategoryCVCell
         cell.config(categorie: categorie)
         
         return cell

@@ -9,16 +9,34 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+enum Route {
+    static let baseUrlFoods:String = "http://kasimadalan.pe.hu/yemekler/"
+    static let baseUrlProducts:String = "http://159.223.0.153/"
+    
+    case fetchProdutcs
+    case fetchFoods
+    case fetchFoodImage(String)
+    
+    var description: String {
+        switch self {
+        case .fetchProdutcs: return "products"
+        case .fetchFoods: return "tumYemekleriGetir.php"
+        case .fetchFoodImage(let imageName): return "resimler/\(imageName)"
+        }
+    }
+}
+
 protocol NetworkServicesProtocol {
     func fetchFoods(completion : @escaping([Food]) -> ())
     func fetchProducts(completion: @escaping([Result]) -> ())
 }
 
-class NetworkServices: NetworkServicesProtocol {
+struct NetworkServices: NetworkServicesProtocol {
     
     func fetchFoods(completion : @escaping([Food]) -> ()) {
         
-        let request = AF.request("http://kasimadalan.pe.hu/yemekler/tumYemekleriGetir.php", method: .get)
+        let urlString = Route.baseUrlFoods + Route.fetchFoods.description
+        let request = AF.request(urlString, method: .get)
         var foods = [Food]()
         
         request.response { response in
@@ -40,7 +58,8 @@ class NetworkServices: NetworkServicesProtocol {
     
     func fetchProducts(completion: @escaping([Result]) -> ()) {
         
-        let request = AF.request("http://159.223.0.153/products", method: .get)
+        let urlString = Route.baseUrlProducts + Route.fetchProdutcs.description
+        let request = AF.request(urlString, method: .get)
         var products = [Result]()
         
         request.response { response in

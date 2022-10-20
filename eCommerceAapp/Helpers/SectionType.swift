@@ -9,13 +9,13 @@ import Foundation
 import UIKit
 
 enum SectionType {
-    case choice
+    case category
     case productSection
     case foodsSection
     
     var title:String? {
         switch self {
-        case .choice:
+        case .category:
             return "Categories"
         case .productSection:
             return "Products"

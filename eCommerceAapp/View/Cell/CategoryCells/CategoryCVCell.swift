@@ -1,15 +1,15 @@
 //
-//  PhotosCollectionViewCell.swift
-//  AmazonTemplate
+//  CategoryCVCell.swift
+//  eCommerceAapp
 //
-//  Created by mehmet duran on 12.10.2022.
+//  Created by mehmet duran on 15.10.2022.
 //
 
 import UIKit
 
-class ChoiceCVCell: UICollectionViewCell {
+class CategoryCVCell: UICollectionViewCell {
     
-    static var identifier = "ChoiceCollectionCell"
+    static var identifier = "CategoryCVCell"
     
     private let imageView:UIImageView = {
         let imageview = UIImageView()

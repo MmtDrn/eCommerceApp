@@ -10,7 +10,7 @@ import UIKit
 class HomeVC: UIViewController {
     
     private var headerView:HeaderView? = nil
-    private var sections:[SectionType] = [.choice, .productSection, .foodsSection]
+    private var sections:[SectionType] = [.category, .productSection, .foodsSection]
     private var foods:[Food] = []
     private var products:[Result] = []
     
@@ -22,7 +22,7 @@ class HomeVC: UIViewController {
         tableview.showsVerticalScrollIndicator = false
         tableview.sectionHeaderTopPadding = 1
         
-        tableview.register(ChoiceCell.self, forCellReuseIdentifier: ChoiceCell.identifier)
+        tableview.register(CategoryCell.self, forCellReuseIdentifier: CategoryCell.identifier)
         tableview.register(ProductCell.self, forCellReuseIdentifier: ProductCell.identifier)
         tableview.register(FoodsCell.self, forCellReuseIdentifier: FoodsCell.identifier)
         
@@ -42,7 +42,6 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -64,8 +63,8 @@ extension HomeVC:UITableViewDelegate, UITableViewDataSource {
         let section = sections[indexPath.section]
         switch section {
             
-        case .choice:
-            let cell = tableView.dequeueReusableCell(withIdentifier: ChoiceCell.identifier, for: indexPath) as! ChoiceCell
+        case .category:
+            let cell = tableView.dequeueReusableCell(withIdentifier: CategoryCell.identifier, for: indexPath) as! CategoryCell
             cell.ChoiceCellProtocol = self
             return cell
         case .productSection:
@@ -89,7 +88,7 @@ extension HomeVC:UITableViewDelegate, UITableViewDataSource {
         let section = sections[indexPath.section]
         switch section {
             
-        case .choice:
+        case .category:
             return view.frame.size.height/7.5
         case .productSection:
             return (view.frame.size.height/10) * 2.3
@@ -99,7 +98,7 @@ extension HomeVC:UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension HomeVC: NetworkViewModelProtocol, ProductCellProtocol, FoodCellProtocol,ChoiceCellProtocol {
+extension HomeVC: NetworkViewModelProtocol, ProductCellProtocol, FoodCellProtocol, CategoryCellProtocol {
     
     private func configureViews(){
         navigationController?.navigationBar.prefersLargeTitles = true
